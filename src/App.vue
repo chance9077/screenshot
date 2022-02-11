@@ -10,7 +10,7 @@ import { ref, onBeforeMount } from 'vue';
 const msg = ref('');
 
 onBeforeMount(() => {
-  fetch('http://localhost:8080')
+  fetch('/api/hello')
     .then(res => res.text())
     .then(res => msg.value = res)
     .catch(() => msg.value = 'error');
