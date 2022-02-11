@@ -1,5 +1,5 @@
 import app from './lib/app';
 
-export default (req, res) => {
+export default (req: any, res: any) => {
   app.callback()(req, res);
 }

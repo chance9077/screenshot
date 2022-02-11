@@ -1,4 +1,4 @@
-import * as Koa from 'koa';
+import Koa = require('koa');
 
 const hello = (ctx: Koa.Context) => {
   ctx.set('Access-Control-Allow-Origin', '*');
