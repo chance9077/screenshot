@@ -5,7 +5,7 @@
     "dev": "vite --host --open",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "dev:lib": "tsc -w --outDir test/dist test/index.ts",
+    "dev:lib": "tsc -w -p test",
     "dev:api": "node test/dist/test"
   },
   "dependencies": {
