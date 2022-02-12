@@ -1,15 +1,21 @@
-import puppeteer from 'puppeteer';
+import chromium from 'chrome-aws-lambda';
+import puppeteer from 'puppeteer-core';
 
-const options = {
-  args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-infobars', '--window-position=0,0', '--ignore-certifcate-errors', '--ignore-certifcate-errors-spki-list'],
-  headless: true,
-  ignoreHTTPSErrors: true
-};
+const options = async () =>
+  process.env.NODE_ENV === 'development'
+    ? {
+      executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+      headless: false,
+      ignoreHTTPSErrors: true
+    } : {
+      args: chromium.args,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
+      ignoreHTTPSErrors: true
+    };
 
-const pptr = async () => {
-  const browser = await puppeteer.launch(options);
-  setTimeout(() => browser.close(), 30 * 1000);
+export const pptr = async () => {
+  const browser = await puppeteer.launch(await options());
+  setTimeout(() => browser.close(), 10 * 1000);
   return browser;
 }
-
-export default pptr;

@@ -1,5 +1,5 @@
 import Router from '@koa/router';
-import pptr from './utils/puppeteer';
+import { pptr, delay } from './utils';
 
 const router = new Router();
 
@@ -13,23 +13,22 @@ router.get('/page', async (ctx) => {
 
   if (link) {
     const browser = await pptr();
-    // const page = await browser.newPage();
-    // await page.goto(Array.isArray(link) ? link[0] : link);
+    const page = await browser.newPage();
+    await page.goto(Array.isArray(link) ? link[0] : link);
     
-    // await new Promise(resolve => setTimeout(() => resolve(''), 1.5 * 1000));
+    await delay(1000);
 
-    // const img = await page.screenshot({
-    //   fullPage: true,
-    //   type: 'webp',
-    //   quality: 50
-    // });
+    const img = await page.screenshot({
+      fullPage: true,
+      type: 'webp',
+      quality: 50
+    });
   
     browser.close();
   
     ctx.set('Access-Control-Allow-Origin', '*');
-    // ctx.type = 'image/webp';
-    // ctx.body = img;
-    ctx.body = link;
+    ctx.type = 'image/webp';
+    ctx.body = img;
 
     return;
   }
