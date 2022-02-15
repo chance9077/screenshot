@@ -20,12 +20,20 @@ router.get('/page', async (ctx) => {
         const img = await page.screenshot({
             fullPage: true,
             type: 'webp',
-            quality: 50
+            quality: 1,
+            encoding: 'base64'
         });
         browser.close();
         ctx.set('Access-Control-Allow-Origin', '*');
-        ctx.type = 'image/webp';
-        ctx.body = img;
+        ctx.type = 'text/html';
+        ctx.body = `
+      <!DOCTYPE>
+      <html>
+        <body>
+          <img src="data:image/webp;base64,${img}" />
+        </body>
+      </html>
+    `;
         return;
     }
     ctx.body = 'error params.';
