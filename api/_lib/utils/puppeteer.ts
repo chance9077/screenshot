@@ -10,12 +10,11 @@ const options = async () =>
     } : {
       args: chromium.args,
       executablePath: await chromium.executablePath,
-      headless: chromium.headless,
+      headless: true,
       ignoreHTTPSErrors: true
     };
 
 export const pptr = async () => {
   const browser = await puppeteer.launch(await options());
-  setTimeout(() => browser.close(), 10 * 1000);
   return browser;
 }

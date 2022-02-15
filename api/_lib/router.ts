@@ -1,5 +1,5 @@
 import Router from '@koa/router';
-import { pptr, delay } from './utils';
+import { pptr } from './utils';
 
 const router = new Router();
 
@@ -15,8 +15,6 @@ router.get('/page', async (ctx) => {
     const browser = await pptr();
     const page = await browser.newPage();
     await page.goto(Array.isArray(link) ? link[0] : link);
-    
-    await delay(1000);
 
     const img = await page.screenshot({
       fullPage: true,
